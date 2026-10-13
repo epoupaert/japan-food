@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guide Gourmand du Japon - Checklist Culinaire</title>
+    <!-- Application installable (PWA) -->
+    <link rel="manifest" href="manifest.webmanifest">
+    <meta name="theme-color" content="#e53e3e" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#17130f" media="(prefers-color-scheme: dark)">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Japan Food">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <!-- Polices optionnelles : la page reste lisible hors ligne grâce aux polices système de secours -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -747,6 +757,13 @@
         renderCategories();
         loadState();
         updateProgress();
+
+        // --- Mode hors ligne (service worker) ---
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", () => {
+                navigator.serviceWorker.register("sw.js").catch(() => {});
+            });
+        }
     </script>
 </body>
 </html>
